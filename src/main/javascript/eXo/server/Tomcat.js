@@ -8,8 +8,8 @@ function Tomcat(tomcatHome) {
   this.cleanServer = eXo.env.cleanServer; 
   this.deployLibDir = this.serverHome + "/lib";
   this.deployWebappDir = this.serverHome + "/webapps";
-  this.configDir = this.serverHome + "/conf";
-  this.gateInConfigDir = this.configDir + "/gatein";
+  this.gateinDir = this.serverHome + "/gatein";
+  this.gateInConfigDir = this.gateinDir + "/conf";
   this.patchDir = this.serverHome;
   this.pluginVersion = "trunk";
 }
@@ -122,7 +122,7 @@ Tomcat.prototype.onDeploy = function(project) {
 Tomcat.prototype.postDeploy = function(product) {
 	
   // Copy configuration
-  new java.io.File(this.gateInConfigDir).mkdir();
+  new java.io.File(this.gateInConfigDir).mkdirs();
   eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../component/common/src/main/java/conf/configuration-tomcat.properties", this.gateInConfigDir + "/configuration.properties")
 
   var configFileInWar = "WEB-INF/conf/configuration.xml";
