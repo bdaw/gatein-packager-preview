@@ -14,6 +14,8 @@ function JbossEar(jbossHome) {
   this.deployLibDir = this.serverHome + "/server/default/deploy/gatein.ear";
   this.deployWebappDir = this.serverHome + "/server/default/deploy/gatein.ear";
   this.deployEarDir = this.serverHome + "/server/default/deploy/";
+  this.configDir = this.serverHome + "/server/default/conf";
+  this.gateInConfigDir = this.configDir + "/gatein";
   this.patchDir = this.serverHome;// + "/server/default"; //because we have to
   // patch bin/ directory
 }
@@ -120,9 +122,11 @@ JbossEar.prototype.postDeploy = function(product) {
   ServerUtil.addClasspathForWar(this.deployLibDir);
 
   // Use jboss PrefixSorter deployer
-  var eXoResourcesFile = new java.io.File(this.deployWebappDir + "/eXoResources.war");
-  var neweXoResourcesFile = new java.io.File(this.deployWebappDir + "/01eXoResources.war");
-  eXoResourcesFile.renameTo(neweXoResourcesFile);
+  // Explode and rename eXoResources.war
+  var eXoResourcesFileName = this.deployWebappDir + "/eXoResources.war";
+  var neweXoResourcesDirectoryName = this.deployWebappDir + "/01eXoResources.war";
+  eXo.core.IOUtil.unzip(eXoResourcesFileName, neweXoResourcesDirectoryName);
+  eXo.core.IOUtil.remove(eXoResourcesFileName);
 
   var portalFile = new java.io.File(this.deployWebappDir + "/" + product.portalwar);
   var newPortalFile = new java.io.File(this.deployWebappDir + "/02portal.war");
@@ -142,6 +146,10 @@ JbossEar.prototype.postDeploy = function(product) {
       eXo.core.IOUtil.remove(file);
     }
   }
+  
+  // Copy configuration
+  new java.io.File(this.gateInConfigDir).mkdir();
+  eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../component/common/src/main/java/conf/configuration-jboss.properties", this.gateInConfigDir + "/configuration.properties")
 
   if (product.integrationTests) {
     var fromFile = new java.io.File(libDir, this.MC_INT_DEMO_ARTIFACT + "-" + this.EXO_KERNEL_VER + ".jar");
