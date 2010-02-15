@@ -28,13 +28,13 @@
     <modelVersion>4.0.0</modelVersion>     
     <groupId>org.gatein.tools</groupId>
     <artifactId>packager</artifactId>
-    <version>1.0.0-Beta07</version>
+    <version>1.0.0-Beta08-SNAPSHOT</version>
     <name>GateIn Packager</name>
     <packaging>pom</packaging>
     <scm>
-        <connection>scm:svn:http://anonsvn.jboss.org/repos/gatein/maven/packager/tags/1.0.0-Beta07</connection>
-        <developerConnection>scm:svn:https://svn.jboss.org/repos/gatein/maven/packager/tags/1.0.0-Beta07</developerConnection>
-        <url>http://fisheye.jboss.org/browse/gatein/maven/packager/tags/1.0.0-Beta07</url>
+        <connection>scm:svn:http://anonsvn.jboss.org/repos/gatein/maven/packager/trunk</connection>
+        <developerConnection>scm:svn:https://svn.jboss.org/repos/gatein/maven/packager/trunk</developerConnection>
+        <url>http://fisheye.jboss.org/browse/gatein/maven/packager/trunk</url>
     </scm>
 
   <!-- **************** -->
