@@ -284,25 +284,33 @@ IOUtil.prototype.unzip = function(zipName, dest) {
 
       var entries = zipFile.entries();
 	  
+      // First treat directories
       while(entries.hasMoreElements()) {
           var entry = entries.nextElement();
 
           if(entry.isDirectory()) {
-            new java.io.File(dest + "/" + entry.getName()).mkdir();
+            new java.io.File(dest + "/" + entry.getName()).mkdirs();
             continue;
           }
-          
-          var input = zipFile.getInputStream(entry);
-          var output = new java.io.FileOutputStream(dest + "/" + entry.getName());
-          var buffer = this.createByteArray(12) ;
-          var len;
+      }
+      
+      // Then files
+      entries = zipFile.entries();
+      while(entries.hasMoreElements()) {
+ 	      var entry = entries.nextElement();
+          if (!entry.isDirectory())
+          {
+             var input = zipFile.getInputStream(entry);
+             var output = new java.io.FileOutputStream(dest + "/" + entry.getName());
+             var buffer = this.createByteArray(12) ;
+             var len;
 
-          while((len = input.read(buffer)) >= 0)
-        	  output.write(buffer, 0, len);
+             while((len = input.read(buffer)) >= 0)
+        	    output.write(buffer, 0, len);
 
-          input.close();
-          output.close();
-
+             input.close();
+             output.close();
+          }
         }
 
         zipFile.close();
