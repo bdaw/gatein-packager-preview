@@ -78,7 +78,7 @@ JbossEar.prototype.preDeploy = function(product) {
   // product.removeDependency(new Project("quartz", "quartz", "jar",
   // "1.5.0-RC2"));
 
-  this.EXO_KERNEL_VER = "2.2.0-Beta05";
+  this.EXO_KERNEL_VER = "2.2.0-CR2";
   product.addDependencies(new Project("org.jboss.mc-int", "jboss-mc-int-common", "jar", "2.2.0.Alpha2"));
   product.addDependencies(new Project("org.jboss.mc-int", "jboss-mc-int-servlet", "jar", "2.2.0.Alpha2"));
   product.addDependencies(new Project("org.exoplatform.kernel", "exo.kernel.mc-int", "jar", this.EXO_KERNEL_VER));
@@ -121,16 +121,18 @@ JbossEar.prototype.postDeploy = function(product) {
   ServerUtil.createEarApplicationXmlForJboss(this.deployWebappDir, product);
   ServerUtil.addClasspathForWar(this.deployLibDir);
 
-  // Use jboss PrefixSorter deployer
+  // Use JBoss PrefixSorter deployer
   // Explode and rename eXoResources.war
   var eXoResourcesFileName = this.deployWebappDir + "/eXoResources.war";
   var neweXoResourcesDirectoryName = this.deployWebappDir + "/01eXoResources.war";
   eXo.core.IOUtil.unzip(eXoResourcesFileName, neweXoResourcesDirectoryName);
   eXo.core.IOUtil.remove(eXoResourcesFileName);
 
-  var portalFile = new java.io.File(this.deployWebappDir + "/" + product.portalwar);
-  var newPortalFile = new java.io.File(this.deployWebappDir + "/02portal.war");
-  portalFile.renameTo(newPortalFile);
+  // Explode and rename portal.war
+  var portalFileName = this.deployWebappDir + "/" + product.portalwar;
+  var newPortalDirectoryName = this.deployWebappDir + "/02portal.war";
+  eXo.core.IOUtil.unzip(portalFileName, newPortalDirectoryName);
+  eXo.core.IOUtil.remove(portalFileName);
   product.portalwar = "02portal.war";
 
   //Move all jars in /lib
