@@ -149,6 +149,10 @@ JbossEar.prototype.postDeploy = function(product) {
     }
   }
   
+  // Copy jcip-annotations.jar in "default" configuration
+  // See JBAS-6437
+  eXo.core.IOUtil.cp(this.serverHome + "/server/all/lib/jcip-annotations.jar", this.serverHome + "/server/default/lib");
+  
   // Copy configuration
   new java.io.File(this.gateInConfigDir).mkdir();
   eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../component/common/src/main/java/conf/configuration-jboss.properties", this.gateInConfigDir + "/configuration.properties")
