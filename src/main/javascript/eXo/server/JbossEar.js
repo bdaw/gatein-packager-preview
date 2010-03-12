@@ -78,7 +78,7 @@ JbossEar.prototype.preDeploy = function(product) {
   // product.removeDependency(new Project("quartz", "quartz", "jar",
   // "1.5.0-RC2"));
 
-  this.EXO_KERNEL_VER = "2.2.0-CR2";
+  this.EXO_KERNEL_VER = "2.2.0-GA";
   product.addDependencies(new Project("org.jboss.mc-int", "jboss-mc-int-common", "jar", "2.2.0.Alpha2"));
   product.addDependencies(new Project("org.jboss.mc-int", "jboss-mc-int-servlet", "jar", "2.2.0.Alpha2"));
   product.addDependencies(new Project("org.exoplatform.kernel", "exo.kernel.mc-int", "jar", this.EXO_KERNEL_VER));
@@ -104,12 +104,30 @@ JbossEar.prototype.preDeploy = function(product) {
     product.removeDependency(new Project("jotm", "jotm", "jar", "2.0.10"));
   //}
 
-  // Remove hibernate libs for JBoss AS5
+  // Remove libs for JBoss AS5
   if (this.exoJBoss5) {
     print("====================== JBOSS5 AS 5 ====================== ");
-    product.removeDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.0.GA"));
+    product.removeDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.1.GA"));
     product.removeDependency(new Project("org.jboss.logging", "jboss-logging-spi", "jar", "2.0.5.GA"));
     product.removeDependency(new Project("org.jboss", "jboss-common-core", "jar", "2.2.9.GA"));
+    product.removeDependency(new Project("antlr", "antlr", "jar", "2.7.6rc1"));
+    product.removeDependency(new Project("cglib", "cglib", "jar", "2.2"));
+    product.removeDependency(new Project("commons-collections", "commons-collections", "jar", "3.2.1"));
+    product.removeDependency(new Project("commons-collections", "commons-collections", "jar", "3.2"));
+    product.removeDependency(new Project("org.hibernate", "hibernate-annotations", "jar", "3.4.0.GA"));
+    product.removeDependency(new Project("org.hibernate", "hibernate-commons-annotations", "jar", "3.1.0.GA"));
+    product.removeDependency(new Project("org.hibernate", "ejb3-persistence", "jar", "1.0.2.GA"));
+    product.removeDependency(new Project("jboss.jbossts", "jbossjts", "jar", "4.6.1.GA"));
+    product.removeDependency(new Project("jboss.jbossts", "jbossts-common", "jar", "4.6.1.GA"));
+    product.removeDependency(new Project("javassist", "javassist", "jar", "3.4.GA"));
+    product.removeDependency(new Project("javax.transaction", "jta", "jar", "1.0.1B"));
+    product.removeDependency(new Project("javax.mail", "mail", "jar", "1.4.2"));
+    product.removeDependency(new Project("quartz", "quartz", "jar", "1.5.2"));
+    product.removeDependency(new Project("quartz", "quartz", "jar", "1.5.2"));
+    product.removeDependency(new Project("log4j", "log4j", "jar", "1.2.14"));
+    product.removeDependency(new Project("xerces", "xercesImpl", "jar", "2.9.1"));
+    product.removeDependency(new Project("xml-apis", "xml-apis", "jar", "1.3.04"));
+    product.removeDependency(new Project("hsqldb", "hsqldb", "jar", "1.8.0.7"));
   }
 }
 
@@ -155,8 +173,11 @@ JbossEar.prototype.postDeploy = function(product) {
   
   // Copy configuration
   new java.io.File(this.gateInConfigDir).mkdir();
-  eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../component/common/src/main/java/conf/configuration-jboss.properties", this.gateInConfigDir + "/configuration.properties")
+  eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../component/common/src/main/java/conf/configuration-jboss.properties", this.gateInConfigDir + "/configuration.properties");
 
+  // Copy sample skin in the deploy directory without affecting gatein.ear/META-INF/application.xml
+  eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../examples/skins/simpleskin/target/gatein-sample-skin.war", this.deployEarDir);
+  
   if (product.integrationTests) {
     var fromFile = new java.io.File(libDir, this.MC_INT_DEMO_ARTIFACT + "-" + this.EXO_KERNEL_VER + ".jar");
     eXo.core.IOUtil.cp(fromFile.getAbsolutePath(), this.deployEarDir);
