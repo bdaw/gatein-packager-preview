@@ -128,7 +128,19 @@ Tomcat.prototype.postDeploy = function(product) {
   // Copy sample skin in the deploy directory without affecting gatein.ear/META-INF/application.xml
   eXo.core.IOUtil.cp(eXo.env.currentDir + "/../../examples/skins/simpleskin/target/gatein-sample-skin.war", this.deployWebappDir);
 
-  
+  // Delete confusing files
+  eXo.core.IOUtil.remove(this.serverHome + "/bin/startup.sh");
+  eXo.core.IOUtil.remove(this.serverHome + "/bin/startup.bat");
+  eXo.core.IOUtil.remove(this.serverHome + "/bin/shutdown.sh");
+  eXo.core.IOUtil.remove(this.serverHome + "/bin/shutdown.bat");
+  eXo.core.IOUtil.remove(this.serverHome + "/RUNNING.txt");
+  eXo.core.IOUtil.cp(this.serverHome + "/LICENSE", this.serverHome + "/TOMCAT-LICENSE");
+  eXo.core.IOUtil.remove(this.serverHome + "/LICENSE");
+  eXo.core.IOUtil.cp(this.serverHome + "/RELEASE-NOTES", this.serverHome + "/TOMCAT-RELEASE-NOTES");
+  eXo.core.IOUtil.remove(this.serverHome + "/RELEASE-NOTES");
+  eXo.core.IOUtil.cp(this.serverHome + "/NOTICE", this.serverHome + "/TOMCAT-NOTICE");
+  eXo.core.IOUtil.remove(this.serverHome + "/NOTICE");
+
   var configFileInWar = "WEB-INF/conf/configuration.xml";
   var portalwar = new java.io.File(this.deployWebappDir + "/" + product.portalwar);
   eXo.System.info("CONF", "Patching " + configFileInWar + " in " + portalwar + " : remove wsrp configuration");
