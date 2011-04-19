@@ -116,18 +116,22 @@ JbossEar.prototype.preDeploy = function(product) {
     product.removeDependency(new Project("commons-collections", "commons-collections", "jar", "3.2"));
     product.removeDependency(new Project("org.hibernate", "hibernate-annotations", "jar", "3.4.0.GA"));
     product.removeDependency(new Project("org.hibernate", "hibernate-commons-annotations", "jar", "3.1.0.GA"));
+    product.removeDependency(new Project("org.hibernate", "hibernate-commons-annotations", "jar", "3.2.3.GA"));
     product.removeDependency(new Project("org.hibernate", "ejb3-persistence", "jar", "1.0.2.GA"));
     product.removeDependency(new Project("jboss.jbossts", "jbossjts", "jar", "4.6.1.GA"));
     product.removeDependency(new Project("jboss.jbossts", "jbossts-common", "jar", "4.6.1.GA"));
     product.removeDependency(new Project("javassist", "javassist", "jar", "3.4.GA"));
     product.removeDependency(new Project("javax.transaction", "jta", "jar", "1.0.1B"));
     product.removeDependency(new Project("javax.mail", "mail", "jar", "1.4.2"));
+    product.removeDependency(new Project("javax.mail", "mail", "jar", "1.4.4"));
     product.removeDependency(new Project("quartz", "quartz", "jar", "1.5.2"));
-    product.removeDependency(new Project("quartz", "quartz", "jar", "1.5.2"));
+    product.removeDependency(new Project("quartz", "quartz", "jar", "1.8.4"));
     product.removeDependency(new Project("log4j", "log4j", "jar", "1.2.14"));
     product.removeDependency(new Project("xerces", "xercesImpl", "jar", "2.9.1"));
     product.removeDependency(new Project("xml-apis", "xml-apis", "jar", "1.3.04"));
     product.removeDependency(new Project("hsqldb", "hsqldb", "jar", "1.8.0.7"));
+    product.removeDependency(new Project("hsqldb", "hsqldb", "jar", "2.0.0"));
+    product.removeDependency(new Project("org.hsqldb", "hsqldb", "jar", "2.0.0"));
   }
 }
 
