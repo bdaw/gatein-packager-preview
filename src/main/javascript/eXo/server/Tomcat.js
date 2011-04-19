@@ -68,8 +68,8 @@ Tomcat.prototype.preDeploy = function(product) {
   var version = product.version;
   if (version.indexOf("2.0") != 0 && version.indexOf("2.1") != 0 && version.indexOf("2.2") != 0
       && version.indexOf("2.5") != 0) {
-    product.addDependencies(new Project("org.slf4j", "slf4j-api", "jar", "1.5.6"));
-    product.addDependencies(new Project("org.slf4j", "slf4j-jdk14", "jar", "1.5.6"));
+    product.addDependencies(new Project("org.slf4j", "slf4j-api", "jar", "1.5.8"));
+    product.addDependencies(new Project("org.slf4j", "slf4j-jdk14", "jar", "1.5.8"));
   }
   product.addDependencies(new Project("commons-logging", "commons-logging", "jar", "1.0.4"));
   product.addDependencies(new Project("commons-pool", "commons-pool", "jar", "1.2"));
